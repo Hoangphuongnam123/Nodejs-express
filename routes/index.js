@@ -9,24 +9,25 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+ 
+  var session = req.session.username;
+  
+  res.render('index', { title: 'Express',session:session });
 });
 
 
 //hiên thi danh sách
 router.get('/list', (req, res) => {
+  var session = req.session.username;
   let sql = "SELECT * FROM nhanvien";
   let query = dbConn.query(sql, (err, users) => {
     if (err) throw err;
     res.render('list', {
-      users: users
+      users: users,session:session
     });
   });
 });
-// hiện thị form add
-router.get('/add', function (req, res, next) {
-  res.render('add', { title: 'Nam' });
-});
+
 //thêm nhân viên
 router.post('/create', (req, res) => {
   let name = req.body.hoten;
@@ -38,9 +39,7 @@ router.post('/create', (req, res) => {
         errors=true;
         req.flash('error',"Thông tin không được bổ trống!!");
         res.locals.message = req.flash();
-        res.redirect('/add');
-        
-        console.log('create fail');
+        res.redirect('/list');
   }
   else{
   let data = { ten: name, email: email, password: password };

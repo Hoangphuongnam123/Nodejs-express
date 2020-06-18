@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 31, 2020 lúc 06:22 PM
+-- Thời gian đã tạo: Th6 18, 2020 lúc 06:24 PM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.4.3
 
@@ -64,8 +64,7 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`id`, `name`, `hinhanh`, `created_at`) VALUES
-(1, 'Samsung A7', '/images/samsunga7.png', '2020-05-31 22:35:23'),
-(2, 'samsunga3', '/images/undefined', '2020-05-31 23:13:33');
+(1, 'Samsung A3', '/images/samsunga3.png', '2020-06-18 23:22:19');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -97,7 +96,7 @@ ALTER TABLE `nhanvien`
 -- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat realtime NodeJS demo</title>
+
+    <style>
+		#content {
+    border: 1px solid darkgrey;
+    width: 400px;
+    height: 300px;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+#content p {
+    margin: 5px;
+}
+
+#username, #content, #message, #sendMessage {
+    margin-bottom: 5px;
+}
+	</style>
+</head>
+
+<body>
+
+<fieldset>
+    <legend>Demo chat realtime NodeJS</legend>
+    <input type="text" id="username" name="username" value="{{session}}" hidden>
+    <br>
+    <div id="content"></div>
+
+    <input id="message" placeholder="Write something..">
+    <br>
+    <button id="sendMessage">SEND</button>
+</fieldset>
+
+<script src="js/socket.io.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script>$(function () {
+	var username = document.getElementById('username').value;
+    //Kết nối tới server socket đang lắng nghe
+    var socket = io.connect('http://localhost:3000');
+     socket.emit('new-user', username)
+	 socket.emit('disconnect', username)
+    //Socket nhận data và append vào giao diện
+    socket.on("send", function (data) {
+        console.log(data);
+        $("#content").append("<p class='message'>" + data.username + ": " + data.message + "</p>")
+    })
+
+	socket.on('user-connected',username => {
+  $("#content").append("<p class='message'> "+String(username)+" connected</p>")
+})
+socket.on('disconnected', username => {
+  $("#content").append("<p class='message'> "+String(username)+" disconnected</p>")
+})
+
+
+    //Bắt sự kiện click gửi message
+    $("#sendMessage").on('click', function () {
+        var username = $('#username').val();
+        var message = $('#message').val();
+
+        if (username == '' || message == '') {
+            alert('Please enter name and message!!');
+        } else {
+            //Gửi dữ liệu cho socket
+            socket.emit('send', {username: username, message: message});
+            $('#message').val('');
+        }
+    })
+});
+</script>
+</body>
+</html>

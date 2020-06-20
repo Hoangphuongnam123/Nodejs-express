@@ -5,6 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
 var flash = require('express-flash');
 var session = require('express-session');
 var indexRouter = require('./routes/index');
@@ -13,6 +14,7 @@ var loginRouter = require('./routes/login');
 var productRouter =require('./routes/product');
 
 var app = express();
+
 
 // view engine setup
 var hbs = require('hbs');
@@ -26,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(session({ cookie: { maxAge: 180000 }, 
+app.use(session({ cookie: { maxAge: 180000*3 }, 
   secret: 'woot',
   resave: false, 
   saveUninitialized: false}));

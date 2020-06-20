@@ -20,6 +20,25 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
+const users ={}
+//Tạo socket 
+io.on('connection', function (socket) {
+	console.log('Welcome to server chat');
+	
+    socket.on('new-user', username => {
+		console.log(username);
+		users[socket.id] = username
+		socket.broadcast.emit('user-connected', username)
+	  })
+	  socket.on('disconnect', () => {
+		socket.broadcast.emit('disconnected', users[socket.id])
+		delete users[socket.id]
+	  })
+    socket.on('send', function (data) {
+        io.sockets.emit('send', data);
+    });
+});
 
 /**
  * Listen on provided port, on all network interfaces.

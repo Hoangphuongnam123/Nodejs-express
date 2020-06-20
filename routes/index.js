@@ -7,6 +7,13 @@ var dbConn = require('../dbConnect/db');
 var express = require('express');
 var router = express.Router();
 
+router.get("/chat", function (req, res) {
+    var session = req.session.username;
+  
+  	res.render('chat', { title: 'Express',session:session });
+});
+
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
  
